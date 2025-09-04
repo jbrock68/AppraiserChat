@@ -5,34 +5,48 @@
      data-guid="8b7360a8-b468-463c-840f-64b1472616e6">
 </div>
 
+<!-- Add viewport meta if you can in your <head> -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
 <style>
-  /* Responsive styles for chat widget */
+  /* Make sure body and html use full height and no scroll */
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%; /* prevent font scaling weirdness */
+  }
+
+  /* On mobile, force chat to full screen */
   @media (max-width: 768px) {
-    /* Force chat iframe or container to fill viewport on mobile */
+    #divicw, 
     iframe#imi_chat_widget_iframe,
     .imi-chat-widget,
     .imi-widget-container {
       position: fixed !important;
       bottom: 0 !important;
       right: 0 !important;
+      top: 0 !important;
+      left: 0 !important;
       width: 100vw !important;
       height: 100vh !important;
       max-width: none !important;
       max-height: none !important;
       border-radius: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
       z-index: 999999 !important;
+      font-size: 18px !important; /* Bigger base font */
+      line-height: 1.4 !important;
     }
 
-    /* Hide any duplicate floating buttons */
+    /* Hide floating buttons if duplicated */
     .imi-float-button,
     .imi-launch-button {
       display: none !important;
     }
-  }
-
-  /* Prevent horizontal scroll on mobile */
-  html, body {
-    overflow-x: hidden;
   }
 </style>
 
@@ -81,7 +95,6 @@
         }
       }, 300);
 
-      // Stop trying after 10 seconds
       setTimeout(() => clearInterval(intervalId), 10000);
     }
   }
@@ -90,4 +103,5 @@
     setTimeout(openChatOnMobile, 2000);
   });
 </script>
+
 
