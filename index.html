@@ -5,6 +5,37 @@
      data-guid="8b7360a8-b468-463c-840f-64b1472616e6">
 </div>
 
+<style>
+  /* Responsive styles for chat widget */
+  @media (max-width: 768px) {
+    /* Force chat iframe or container to fill viewport on mobile */
+    iframe#imi_chat_widget_iframe,
+    .imi-chat-widget,
+    .imi-widget-container {
+      position: fixed !important;
+      bottom: 0 !important;
+      right: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: none !important;
+      max-height: none !important;
+      border-radius: 0 !important;
+      z-index: 999999 !important;
+    }
+
+    /* Hide any duplicate floating buttons */
+    .imi-float-button,
+    .imi-launch-button {
+      display: none !important;
+    }
+  }
+
+  /* Prevent horizontal scroll on mobile */
+  html, body {
+    overflow-x: hidden;
+  }
+</style>
+
 <!-- Load the chat widget -->
 <script>
   var i = {
@@ -35,4 +66,28 @@
     }
   };
   i.t();
+
+  // Optional: Auto open chat window on mobile portrait
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+
+  function openChatOnMobile() {
+    if (isMobile()) {
+      const intervalId = setInterval(() => {
+        if (window.IMI && IMI.chat && typeof IMI.chat.openChatWindow === "function") {
+          clearInterval(intervalId);
+          IMI.chat.openChatWindow();
+        }
+      }, 300);
+
+      // Stop trying after 10 seconds
+      setTimeout(() => clearInterval(intervalId), 10000);
+    }
+  }
+
+  window.addEventListener("load", () => {
+    setTimeout(openChatOnMobile, 2000);
+  });
 </script>
+
